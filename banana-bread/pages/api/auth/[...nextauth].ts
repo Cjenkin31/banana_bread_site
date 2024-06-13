@@ -1,7 +1,4 @@
 // pages/api/auth/[...nextauth].ts
-console.log("Discord Client ID:", process.env.DISCORD_CLIENT_ID);
-console.log("Discord Client Secret:", process.env.DISCORD_CLIENT_SECRET);
-
 import NextAuth from 'next-auth';
 import DiscordProvider from 'next-auth/providers/discord';
 
@@ -10,8 +7,18 @@ export default NextAuth({
     DiscordProvider({
       clientId: process.env.DISCORD_CLIENT_ID ?? '',
       clientSecret: process.env.DISCORD_CLIENT_SECRET ?? '',
+      authorization: {
+        url: 'https://discord.com/oauth2/authorize',
+        params: {
+          client_id: process.env.DISCORD_CLIENT_ID,
+          response_type: 'code',
+          redirect_uri: `${process.env.NEXTAUTH_URL}/api/auth/callback/discord`,
+          scope: 'identify guilds',
+        },
+      },
     }),
   ],
+  secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
     async jwt({ token, user }) {
       if (user) {

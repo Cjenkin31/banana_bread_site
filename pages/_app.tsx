@@ -1,12 +1,12 @@
-// pages/_app.tsx
-import { SessionProvider } from 'next-auth/react';
 import '../app/globals.css';
+import type { AppProps } from 'next/app';
+import Layout from '../components/Layout';
 
-function MyApp({ Component, pageProps }: { Component: React.ComponentType<any>, pageProps: any }) {
+function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <SessionProvider session={pageProps.session}>
+    <Layout user={pageProps.user} bananas={pageProps.bananas}>
       <Component {...pageProps} />
-    </SessionProvider>
+    </Layout>
   );
 }
 

@@ -34,6 +34,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         // Fetch the correct username and avatar from Discord API
         const discordUserInfo = await fetchDiscordUserInfo(discordId);
 
+        if (!JWT_SECRET) {
+          throw new Error('JWT_SECRET is not set');
+        }
+
         const token = jwt.sign({ discordId, username: discordUserInfo.username, avatar: discordUserInfo.avatar }, JWT_SECRET, { expiresIn: '7d' });
 
         res.setHeader('Set-Cookie', `token=${token}; HttpOnly; Path=/; Max-Age=604800; Secure; SameSite=Strict`);

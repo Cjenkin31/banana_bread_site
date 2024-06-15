@@ -49,7 +49,8 @@ const Home = ({ user, bananas }: { user: any, bananas: number }) => {
     <main className="flex flex-col items-center justify-center min-h-screen bg-cover bg-gray-900 p-4 text-white">
       {!isVerified ? (
         <section className="flex flex-col items-center mt-10">
-          <h2 className="text-3xl font-bold mb-5">Verify Your Discord ID</h2>
+          <h2 className="text-3xl font-bold mb-5">Verify Your Discord ID </h2>
+          <h3 className=" font-bold mb-5">(use /get_auth_token in Discord to get your Auth Token) </h3>
           <form onSubmit={handleSubmit} className="flex flex-col items-center">
             <input
               type="text"
